@@ -1,12 +1,14 @@
 using System.Collections.Generic;
 
-public class MatchManager
+public static class MatchManager
 {
-    List<List<string>> matches = new List<List<string>>();
-    public void AddMatch(string firstParticipant)
+    static Dictionary<string, int> participants = new Dictionary<string, int>();
+    static Dictionary<int, List<string>> matches = new Dictionary<int, List<string>>(); // IDK if this is really necessary, it may not be
+    public static void AddParticipantToMatch(string participant, int matchNumber)
     {
-        var newMatch = new List<string>();
-        newMatch.Add(firstParticipant);
-        matches.Add(newMatch);
+        if (!matches.ContainsKey(matchNumber)) matches[matchNumber] = new List<string>();
+        if (!participants.ContainsKey(participant)) participants[participant] = 0;
+
+        matches[matchNumber].Add(participant);
     }
 }

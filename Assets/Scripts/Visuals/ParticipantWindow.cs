@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class ParticipantWindow : MonoBehaviour
 {
-    MatchManager matchManager;
     CanvasGroup canvasGroup;
 
     [SerializeField] TMP_InputField participantNameEntry;
@@ -16,7 +15,6 @@ public class ParticipantWindow : MonoBehaviour
         canvasGroup.blocksRaycasts = false;
 
         transform.localScale = Vector3.zero;
-        matchManager = new MatchManager();
     }
 
     public void OpenWindow()
@@ -40,6 +38,6 @@ public class ParticipantWindow : MonoBehaviour
 
     public void DoneAddingParticipant()
     {        
-        matchManager.AddMatch(participantNameEntry.text);
+        MatchManager.AddParticipantToMatch(participantNameEntry.text, 0);
     }
 }
