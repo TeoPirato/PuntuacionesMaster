@@ -1,8 +1,19 @@
-﻿using TMPro;
+﻿using System;
+using TMPro;
 using UnityEngine;
 
 public class ParticipantWindow : MonoBehaviour
 {
+    static ParticipantWindow instance = null;
+    public static ParticipantWindow Instance
+    {
+        get
+        {
+            if (instance == null) instance = FindObjectOfType<ParticipantWindow>();
+            return instance;
+        }
+    }
+
     CanvasGroup canvasGroup;
 
     [SerializeField] TMP_InputField participantNameEntry;
@@ -19,8 +30,8 @@ public class ParticipantWindow : MonoBehaviour
 
     public void OpenWindow()
     {
-        canvasGroup.LeanAlpha(1, .2f);
-        transform.LeanScale(Vector3.one, .2f);
+        canvasGroup.LeanAlpha(1, .4f);
+        transform.LeanScale(Vector3.one, .4f).setEaseOutBounce();
 
         canvasGroup.interactable = true;
         canvasGroup.blocksRaycasts = true;
@@ -36,8 +47,10 @@ public class ParticipantWindow : MonoBehaviour
         canvasGroup.blocksRaycasts = false;
     }
 
+    public event Action<string> AddedParticipantName;
     public void DoneAddingParticipant()
     {        
         MatchManager.AddParticipantToMatch(participantNameEntry.text, 0);
+        AddedParticipantName?.Invoke(participantNameEntry.text);
     }
 }

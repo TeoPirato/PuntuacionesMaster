@@ -10,11 +10,6 @@ public class Match : MonoBehaviour
     void Start()
     {
         matchNumber = MatchManager.matchNumber++;
-        matchNumberText.text = $"#{matchNumber}";
-    }
-
-    public void AddParticipantToMatch()
-    {
-        // Open participant window
+        matchNumberText.text = $"#{matchNumber:00}";
     }
 }
