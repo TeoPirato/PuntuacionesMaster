@@ -47,10 +47,10 @@ public class ParticipantWindow : MonoBehaviour
         canvasGroup.blocksRaycasts = false;
     }
 
-    public event Action<string> AddedParticipantName;
+    public event Action<string> AddedParticipant;
     public void DoneAddingParticipant()
     {        
         MatchManager.AddParticipantToMatch(participantNameEntry.text, 0);
-        AddedParticipantName?.Invoke(participantNameEntry.text);
+        AddedParticipant?.Invoke(participantNameEntry.text);
     }
 }
