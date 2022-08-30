@@ -13,13 +13,12 @@ public class Participant : MonoBehaviour
     void Start()
     {
         participantName.text = "";
-        //participantName.alpha = .5f;
 
         transform.localScale = Vector3.zero;
         transform.LeanScale(Vector3.one, .4f).setEaseOutBounce();
 
-        winButton.transform.localScale = Vector3.zero;
-        removeButton.transform.localScale = Vector3.zero;
+        winButton.transform.localScale = removeButton.transform.localScale = Vector3.zero;
+        winButton.interactable = removeButton.interactable = false;
     }
 
     public void AddParticipantToMatch()
@@ -45,7 +44,6 @@ public class Participant : MonoBehaviour
     void ChangeParticipantName(string name)
     {        
         participantName.text = name;
-        //LeanTween.value(.5f, 1, .2f).setOnUpdate(value => participantName.alpha = value).setEaseOutCirc();
         ParticipantWindow.Instance.AddedParticipant -= ChangeParticipantName;
 
         addButton.interactable = false;
@@ -65,5 +63,10 @@ public class Participant : MonoBehaviour
     {
         winButton.interactable = false;
         winButton.transform.LeanScale(Vector3.zero, .2f);
+    }
+
+    public void Win()
+    {
+        transform.parent.LeanScale(Vector3.zero, .2f).setOnComplete(() => Destroy(transform.parent.gameObject));
     }
 }
