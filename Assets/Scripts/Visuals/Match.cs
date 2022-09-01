@@ -2,14 +2,13 @@ using UnityEngine;
 using TMPro;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using System.Linq;
 
 public class Match : MonoBehaviour
 {    
     [SerializeField] TextMeshProUGUI matchNumberText;
     [SerializeField] GameObject participantPrefab;
     [SerializeField] Button drawButton;
-
-    int matchNumber;
 
     List<Participant> participants = new List<Participant>();
 
@@ -19,8 +18,7 @@ public class Match : MonoBehaviour
     {
         verticalLayoutGroup = (RectTransform)transform.parent;
 
-        matchNumber = MatchManager.matchNumber++;
-        matchNumberText.text = $"#{matchNumber:00}";
+        matchNumberText.text = $"#{MatchManager.NewMatchNumber:00}";
 
         InstantiateParticipant();
 
@@ -62,6 +60,8 @@ public class Match : MonoBehaviour
 
     public void Draw()
     {
+        MatchManager.AddScoreToParticipant(1, participants.Select(p => p.ParticipantName).ToArray());
+
         transform.LeanScale(Vector3.zero, .2f).setOnComplete(() => Destroy(gameObject));
     }
 }

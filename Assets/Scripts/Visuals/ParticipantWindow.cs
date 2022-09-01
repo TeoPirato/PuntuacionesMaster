@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ParticipantWindow : MonoBehaviour
 {
+    #region Singleton
     static ParticipantWindow instance = null;
     public static ParticipantWindow Instance
     {
@@ -13,6 +14,7 @@ public class ParticipantWindow : MonoBehaviour
             return instance;
         }
     }
+    #endregion
 
     CanvasGroup canvasGroup;
 
@@ -50,7 +52,6 @@ public class ParticipantWindow : MonoBehaviour
     public event Action<string> AddedParticipant;
     public void DoneAddingParticipant()
     {        
-        MatchManager.AddParticipantToMatch(participantNameEntry.text, 0);
         AddedParticipant?.Invoke(participantNameEntry.text);
     }
 }
