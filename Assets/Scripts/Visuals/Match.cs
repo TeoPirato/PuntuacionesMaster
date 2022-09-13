@@ -60,7 +60,8 @@ public class Match : MonoBehaviour
 
     public void Draw()
     {
-        MatchManager.AddScoreToParticipant(1, participants.Select(p => p.ParticipantName).ToArray());
+        string[] participantNames = participants.Select(p => p.ParticipantName).ToArray();
+        MatchManager.AddScoreToParticipant(1, participantNames);
 
         transform.LeanScale(Vector3.zero, .2f).setOnComplete(() => Destroy(gameObject));
     }

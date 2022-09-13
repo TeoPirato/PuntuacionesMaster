@@ -5,7 +5,12 @@ public static class MatchManager
     static int matchNumber = 0;
     public static int NewMatchNumber => matchNumber++;
 
-    static Dictionary<string, int> participants = new Dictionary<string, int>();
+    static readonly Dictionary<string, int> participants = new Dictionary<string, int>();
+
+    public static void InitializeParticipants()
+    {
+
+    }
 
     public static void AddScoreToParticipant(int score, params string[] participantNames)
     {
