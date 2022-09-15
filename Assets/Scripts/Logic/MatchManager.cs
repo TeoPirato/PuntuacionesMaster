@@ -1,11 +1,12 @@
 using System.Collections.Generic;
+using System.Linq;
 
 public static class MatchManager
 {
     static int matchNumber = 0;
     public static int NewMatchNumber => matchNumber++;
 
-    static readonly Dictionary<string, int> participants = new Dictionary<string, int>();
+    static readonly Dictionary<string, int> participants = new Dictionary<string, int>() { ["oi"] = 0, ["Teo Pirato Guthmann very large text on purpose"] = 10000 };
 
     public static void InitializeParticipants()
     {
@@ -19,14 +20,10 @@ public static class MatchManager
             if (!participants.ContainsKey(name)) participants[name] = score;
             else participants[name] += score;
         }
-        UnityEngine.Debug.Log(ScoresText());
-    }    
+    }
 
-    public static string ScoresText()
+    public static Dictionary<string, int> GetParticipantsSortedByScore()
     {
-        string text = "";
-        foreach (string name in participants.Keys)
-            text += $"\n{name}: {participants[name]}";
-        return text;
+        return participants.OrderByDescending(pair => pair.Value).ToDictionary(pair => pair.Key, pair => pair.Value);
     }
 }

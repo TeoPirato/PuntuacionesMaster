@@ -145,7 +145,7 @@ GameObject:
   - component: {fileID: 5804741968231868414}
   - component: {fileID: 8280401682846299511}
   m_Layer: 5
-  m_Name: Participant
+  m_Name: MatchParticipant
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
