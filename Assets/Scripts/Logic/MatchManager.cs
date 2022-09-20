@@ -6,7 +6,8 @@ public static class MatchManager
     static int matchNumber = 0;
     public static int NewMatchNumber => matchNumber++;
 
-    static readonly Dictionary<string, int> participants = new Dictionary<string, int>() { ["oi"] = 0, ["Teo Pirato Guthmann very large text on purpose"] = 10000 };
+    static readonly SortedList<string, int> participants = new SortedList<string, int>();// { ["oi"] = 0, ["Teo Pirato Guthmann very large text on purpose"] = 10000 };
+    static readonly SortedSet<string> names = new SortedSet<string>();
 
     public static void InitializeParticipants()
     {
@@ -17,7 +18,11 @@ public static class MatchManager
     {
         foreach (string name in participantNames)
         {
-            if (!participants.ContainsKey(name)) participants[name] = score;
+            if (!names.Contains(name))
+            {
+                names.Add(name);
+                participants[name] = score;
+            }
             else participants[name] += score;
         }
     }
@@ -26,4 +31,6 @@ public static class MatchManager
     {
         return participants.OrderByDescending(pair => pair.Value).ToDictionary(pair => pair.Key, pair => pair.Value);
     }
+
+    public static bool ParticipantExists(string participantName) => names.Contains(participantName);
 }

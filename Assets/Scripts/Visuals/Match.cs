@@ -10,8 +10,7 @@ public class Match : MonoBehaviour
     [SerializeField] GameObject participantPrefab;
     [SerializeField] Button drawButton;
 
-    List<Participant> participants = new List<Participant>();
-
+    readonly List<Participant> participants = new List<Participant>();
     RectTransform verticalLayoutGroup;
 
     void Start()

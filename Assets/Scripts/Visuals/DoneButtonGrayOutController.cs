@@ -3,6 +3,9 @@ using UnityEngine.UI;
 
 public class DoneButtonGrayOutController : MonoBehaviour
 {
+    [SerializeField]
+    GameObject nuevo;
+
     Button doneButton;
 
     void Start()
@@ -15,5 +18,7 @@ public class DoneButtonGrayOutController : MonoBehaviour
     {
         bool isValidName = participantName != "";
         doneButton.interactable = isValidName;
+
+        nuevo.SetActive(!MatchManager.ParticipantExists(participantName));
     }
 }

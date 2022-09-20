@@ -54,4 +54,6 @@ public class ParticipantWindow : MonoBehaviour
     {        
         AddedParticipant?.Invoke(participantNameEntry.text);
     }
+
+
 }
