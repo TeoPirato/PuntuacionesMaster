@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 8733133642604020366}
   - component: {fileID: 6628966560264160987}
   m_Layer: 5
-  m_Name: Match
+  m_Name: ChessMatch
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -105,9 +105,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a11bf89eebfa8a3489a362073fa11cc4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canTie: 1
+  showAllWinButtons: 1
+  maximumParticipants: 2
+  winningScore: 2
+  maximumWinners: 1
   matchNumberText: {fileID: 8994721089008396049}
   participantPrefab: {fileID: 3782575645288907939, guid: 90f49a8d668dd93408012e3ada67d7a8, type: 3}
-  drawButton: {fileID: 5074686677680134230}
+  tieButton: {fileID: 5074686677680134230}
 --- !u!114 &8733133642604020366
 MonoBehaviour:
   m_ObjectHideFlags: 0

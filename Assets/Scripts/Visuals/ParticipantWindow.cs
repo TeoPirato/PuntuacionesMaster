@@ -42,6 +42,8 @@ public class ParticipantWindow : MonoBehaviour
 
     public void CloseWindow()
     {
+        AddedParticipant?.Invoke(null);
+
         canvasGroup.LeanAlpha(0, .2f);
         transform.LeanScale(Vector3.zero, .2f);
 

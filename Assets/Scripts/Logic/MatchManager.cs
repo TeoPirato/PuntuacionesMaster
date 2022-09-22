@@ -6,7 +6,7 @@ public static class MatchManager
     static int matchNumber = 0;
     public static int NewMatchNumber => matchNumber++;
 
-    static readonly SortedList<string, int> participants = new SortedList<string, int>();// { ["oi"] = 0, ["Teo Pirato Guthmann very large text on purpose"] = 10000 };
+    static readonly SortedList<string, int> participants = new SortedList<string, int>();
     static readonly SortedSet<string> names = new SortedSet<string>();
 
     public static void InitializeParticipants()

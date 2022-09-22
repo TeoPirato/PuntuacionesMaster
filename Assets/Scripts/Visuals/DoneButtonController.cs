@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class DoneButtonGrayOutController : MonoBehaviour
+public class DoneButtonController : MonoBehaviour
 {
     [SerializeField]
     GameObject nuevo;

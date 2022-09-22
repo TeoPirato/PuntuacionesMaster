@@ -4,15 +4,23 @@ using UnityEngine.UI;
 
 public class Participant : MonoBehaviour
 {
-    [HideInInspector]
-    public Match match;
+    Match match;
+    int winningScore;
+    bool showWinButtonOnChangeName;
+
+    public void SetVariables(Match match, int winningScore, bool showWinButtonOnChangeName)
+    {
+        this.match = match;
+        this.winningScore = winningScore;
+        this.showWinButtonOnChangeName = showWinButtonOnChangeName;        
+    }
 
     [SerializeField] TextMeshProUGUI participantName;
     [SerializeField] Button addButton, winButton, removeButton;
 
     void Start()
     {
-        ParticipantName = "";
+        participantName.text = "";
 
         transform.localScale = Vector3.zero;
         transform.LeanScale(Vector3.one, .4f).setEaseOutBounce();
@@ -23,8 +31,7 @@ public class Participant : MonoBehaviour
 
     public void AddParticipantToMatch()
     {
-        ParticipantWindow.Instance.AddedParticipant += ChangeParticipantName;        
-        ParticipantWindow.Instance.AddedParticipant += match.AddedParticipant;
+        ParticipantWindow.Instance.AddedParticipant += ChangeParticipantName; 
         ParticipantWindow.Instance.OpenWindow();
     }
 
@@ -32,19 +39,27 @@ public class Participant : MonoBehaviour
     {
         match.RemovedParticipant();
 
-        ParticipantName = "";
+        participantName.text = "";
 
         addButton.interactable = true;
         addButton.transform.LeanScale(Vector3.one, .4f).setEaseOutBounce();
 
         removeButton.interactable = false;
         removeButton.transform.LeanScale(Vector3.zero, .2f);
+
+        HideWinButton();
     }
 
     void ChangeParticipantName(string name)
     {
-        ParticipantName = name;
         ParticipantWindow.Instance.AddedParticipant -= ChangeParticipantName;
+        if (name == null) return;
+
+        match.AddedParticipant();
+        if (showWinButtonOnChangeName) ShowWinButton();
+
+        MatchManager.AddScoreToParticipant(0, name);
+        participantName.text = name;
 
         addButton.interactable = false;
         addButton.transform.LeanScale(Vector3.zero, .2f);
@@ -65,15 +80,16 @@ public class Participant : MonoBehaviour
         winButton.transform.LeanScale(Vector3.zero, .2f);
     }
 
-    public string ParticipantName
-    {
-        get => participantName.text;
-        private set => participantName.text = value;
-    }
+    public string ParticipantName => participantName.text;
 
     public void Win()
     {
-        MatchManager.AddScoreToParticipant(2, ParticipantName);
-        transform.parent.LeanScale(Vector3.zero, .2f).setOnComplete(() => Destroy(transform.parent.gameObject));
+        MatchManager.AddScoreToParticipant(winningScore, ParticipantName);
+        match.DestroyMatch();
+    }
+
+    public void LoseJenga()
+    {
+        match.LoseJenga(this);
     }
 }

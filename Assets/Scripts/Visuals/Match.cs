@@ -5,10 +5,18 @@ using UnityEngine.UI;
 using System.Linq;
 
 public class Match : MonoBehaviour
-{    
+{
+    [Header("Settings for each game")]
+    [SerializeField] bool canTie;
+    [Tooltip("If true, it shows all win buttons only after all participants have been added")]
+    [SerializeField] bool showAllWinButtons;
+    [SerializeField] int maximumParticipants;
+    [SerializeField] int winningScore;
+    [SerializeField] int maximumWinners;
+
     [SerializeField] TextMeshProUGUI matchNumberText;
     [SerializeField] GameObject participantPrefab;
-    [SerializeField] Button drawButton;
+    [SerializeField] Button tieButton;
 
     readonly List<Participant> participants = new List<Participant>();
     RectTransform verticalLayoutGroup;
@@ -21,47 +29,82 @@ public class Match : MonoBehaviour
 
         InstantiateParticipant();
 
-        drawButton.transform.localScale = Vector3.zero;
-        drawButton.interactable = false;
+        tieButton.transform.localScale = Vector3.zero;
+        tieButton.interactable = false;
     }
 
-    public void AddedParticipant(string name)
+    public void AddedParticipant()
     {
-        if (participants.Count < 2)
+        if (participants.Count < maximumParticipants)
             InstantiateParticipant();
         else
         {
-            drawButton.interactable = true;
-            drawButton.transform.LeanScale(Vector3.one, .4f).setEaseOutBounce();
-            foreach (var p in participants)
-                p.ShowWinButton();
+            if (canTie)
+            {
+                tieButton.interactable = true;
+                tieButton.transform.LeanScale(Vector3.one, .4f).setEaseOutBounce();
+            }
+            if (showAllWinButtons) ShowWinButtons();
         }
+    }
 
-        ParticipantWindow.Instance.AddedParticipant -= AddedParticipant;
+    void ShowWinButtons()
+    {
+        foreach (var p in participants)
+            p.ShowWinButton();
+    }
+    void HideWinButtons()
+    {
+        foreach (var p in participants)
+            p.HideWinButton();
     }
 
     void InstantiateParticipant()
     {
         var newParticipant = Instantiate(participantPrefab, transform).GetComponent<Participant>();
-        newParticipant.match = this;
+        newParticipant.SetVariables(this, winningScore, !showAllWinButtons);
         participants.Add(newParticipant);
 
-        LayoutRebuilder.ForceRebuildLayoutImmediate(verticalLayoutGroup);
+        LayoutRebuilder.ForceRebuildLayoutImmediate(verticalLayoutGroup); // This is a hack for the UI to work
     }
 
     public void RemovedParticipant()
     {
-        drawButton.interactable = false;
-        drawButton.transform.LeanScale(Vector3.zero, .2f);
-        foreach (var p in participants)
-            p.HideWinButton();        
+        if (canTie)
+        {
+            tieButton.interactable = false;
+            tieButton.transform.LeanScale(Vector3.zero, .2f);
+        }
+        if (showAllWinButtons) HideWinButtons();
     }
 
-    public void Draw()
+    public void Tie()
     {
         string[] participantNames = participants.Select(p => p.ParticipantName).ToArray();
         MatchManager.AddScoreToParticipant(1, participantNames);
 
-        transform.LeanScale(Vector3.zero, .2f).setOnComplete(() => Destroy(gameObject));
+        DestroyMatch();
+    }
+
+    public void LoseJenga(Participant loser)
+    {
+        participants.Remove(loser);
+        EliminateNamelessParticipant();
+        MatchManager.AddScoreToParticipant(1, participants.Select(p => p.ParticipantName).ToArray());
+        DestroyMatch();
+
+        void EliminateNamelessParticipant()
+        {
+            if (participants[participants.Count - 1].ParticipantName == "")
+                participants.RemoveAt(participants.Count - 1);
+        }
+    }
+
+    int winners = 0;
+    public void DestroyMatch()
+    {
+        winners++;
+        if(winners >= maximumWinners)
+            transform.LeanScale(Vector3.zero, .2f).setOnComplete(() => Destroy(gameObject));
     }
 }
