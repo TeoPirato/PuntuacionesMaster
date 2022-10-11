@@ -37,4 +37,9 @@ public class ScreensController : MonoBehaviour
     {
         MatchManager.SaveScores();
     }
+
+    void OnApplicationPause(bool pause)
+    {
+        if(pause) MatchManager.SaveScores();
+    }
 }

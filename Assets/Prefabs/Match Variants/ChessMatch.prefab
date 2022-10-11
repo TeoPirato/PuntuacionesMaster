@@ -489,7 +489,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2153281907950525213, guid: 806d3b37b8422924d9bf3787a1f0de59, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Draw
+      value: Tie
       objectReference: {fileID: 0}
     - target: {fileID: 2153281907950525213, guid: 806d3b37b8422924d9bf3787a1f0de59, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
