@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using UnityEngine;
 
 public static class MatchManager
 {
@@ -9,9 +11,30 @@ public static class MatchManager
     static readonly SortedList<string, int> participants = new SortedList<string, int>();
     static readonly SortedSet<string> names = new SortedSet<string>();
 
+    static string configPath;
+
     public static void InitializeParticipants()
     {
+        configPath = Application.persistentDataPath + "/config.txt";
 
+        if(!File.Exists(configPath))
+        {
+            SaveScores();
+            return;
+        }
+
+        string[] lines = File.ReadAllLines(configPath);
+        foreach (string line in lines)
+        {
+            string[] pair = line.Remove(line.Length - 1, 1).Remove(0, 1).Split(',');
+            names.Add(pair[0]);
+            participants.Add(pair[0], int.Parse(pair[1]));
+        }
+    }
+
+    public static void SaveScores()
+    {
+        File.WriteAllLines(configPath, participants.Select(v => $"{v}"));
     }
 
     public static void AddScoreToParticipant(int score, params string[] participantNames)

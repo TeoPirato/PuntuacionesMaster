@@ -27,4 +27,14 @@ public class ScreensController : MonoBehaviour
     {
         SetScreen(!matchesScreen.activeSelf);
     }
+
+    void OnEnable()
+    {
+        MatchManager.InitializeParticipants();
+    }
+
+    void OnDisable()
+    {
+        MatchManager.SaveScores();
+    }
 }
