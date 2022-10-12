@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ScreensController : MonoBehaviour
 {
@@ -41,5 +42,11 @@ public class ScreensController : MonoBehaviour
     void OnApplicationPause(bool pause)
     {
         if(pause) MatchManager.SaveScores();
+    }
+
+    public void ExitBackToLogIn()
+    {
+        MatchManager.SaveScores();
+        SceneManager.LoadScene(0);
     }
 }

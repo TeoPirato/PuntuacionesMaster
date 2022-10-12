@@ -11,12 +11,10 @@ public static class MatchManager
     static readonly SortedList<string, int> participants = new SortedList<string, int>();
     static readonly SortedSet<string> names = new SortedSet<string>();
 
-    static string configPath;
+    readonly static string configPath = Application.persistentDataPath + "/data.txt";
 
     public static void InitializeParticipants()
     {
-        configPath = Application.persistentDataPath + "/config.txt";
-
         if(!File.Exists(configPath))
         {
             SaveScores();
@@ -35,6 +33,13 @@ public static class MatchManager
     public static void SaveScores()
     {
         File.WriteAllLines(configPath, participants.Select(v => $"{v}"));
+    }
+
+    public static void DeleteScores()
+    {
+        participants.Clear();
+        names.Clear();
+        File.WriteAllText(configPath, "");
     }
 
     public static void AddScoreToParticipant(int score, params string[] participantNames)

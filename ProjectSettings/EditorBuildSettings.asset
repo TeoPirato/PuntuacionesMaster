@@ -6,6 +6,18 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/Log In.unity
+    guid: 9f52ae9db467d974cb3dbeda4f2c135a
+  - enabled: 1
     path: Assets/Scenes/Ajedrez.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Scenes/Truco.unity
+    guid: db5e8d98379a9664dafbffa385e26a8d
+  - enabled: 1
+    path: Assets/Scenes/Jenga.unity
+    guid: 3fc730fa67d764e46be3507a6a572ef6
+  - enabled: 1
+    path: Assets/Scenes/UNO.unity
+    guid: 0647159542524c74dbdcdd4407a1ca88
   m_configObjects: {}
