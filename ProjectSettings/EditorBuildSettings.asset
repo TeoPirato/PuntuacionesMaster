@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/UNO.unity
     guid: 0647159542524c74dbdcdd4407a1ca88
+  - enabled: 1
+    path: Assets/Scenes/Yin.unity
+    guid: 6a846f51faadd6e4bb82dc43026115d7
   m_configObjects: {}
