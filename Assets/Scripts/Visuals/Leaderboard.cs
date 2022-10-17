@@ -1,15 +1,17 @@
+using TMPro;
 using UnityEngine;
 
 public class Leaderboard : MonoBehaviour
 {
     [SerializeField]
-    GameObject scoreParticipantPrefab;
-
+    TextMeshProUGUI position, participantName, score;
+        
     void OnEnable()
     {        
         var sortedParticipantsByScore = MatchManager.GetParticipantsSortedByScore();
 
         int i = 0;
+        
         foreach (var pair in sortedParticipantsByScore)
         {
             ScoreParticipant newScoreParticipant;
@@ -21,5 +23,12 @@ public class Leaderboard : MonoBehaviour
             newScoreParticipant.UpdateValues(i + 1, pair.Key, pair.Value);
             i++;
         }
+    }
+
+    public void UpdateValues(int position, string participantName, int score)
+    {
+        this.position.text = $"#{position:00}";
+        this.participantName.text = participantName;
+        this.score.text = $"{score:00}";
     }
 }
