@@ -1,34 +1,41 @@
+using System.Text;
 using TMPro;
 using UnityEngine;
 
 public class Leaderboard : MonoBehaviour
 {
     [SerializeField]
-    TextMeshProUGUI position, participantName, score;
-        
+    TextMeshProUGUI participantName, score;
+
+    [SerializeField]
+    int nameLenghtCap;
+
     void OnEnable()
     {        
         var sortedParticipantsByScore = MatchManager.GetParticipantsSortedByScore();
 
         int i = 0;
-        
+
+        StringBuilder participantNameString = new StringBuilder();
+        StringBuilder scoreString = new StringBuilder();
         foreach (var pair in sortedParticipantsByScore)
         {
-            ScoreParticipant newScoreParticipant;
-            if (i >= transform.childCount)
-                newScoreParticipant = Instantiate(scoreParticipantPrefab, transform).GetComponent<ScoreParticipant>();
-            else 
-                newScoreParticipant = transform.GetChild(i).GetComponent<ScoreParticipant>();
+            string color = i switch
+            {
+                0 => "#ffd700",
+                1 => "#c0c0c0",
+                2 => "#cd7f32",
+                _ => "#ffffff",
+            };
 
-            newScoreParticipant.UpdateValues(i + 1, pair.Key, pair.Value);
+            string cappedName = (pair.Key.Length >= nameLenghtCap) ? $"{pair.Key.Remove(nameLenghtCap, pair.Key.Length - nameLenghtCap)}..." : pair.Key;
+            participantNameString.AppendLine($"<color={color}>{cappedName}</color>");
+            scoreString.AppendLine($"{pair.Value:00}");
+
             i++;
         }
-    }
 
-    public void UpdateValues(int position, string participantName, int score)
-    {
-        this.position.text = $"#{position:00}";
-        this.participantName.text = participantName;
-        this.score.text = $"{score:00}";
+        participantName.text = participantNameString.ToString();
+        score.text = scoreString.ToString();
     }
 }

@@ -14,7 +14,6 @@ public class Match : MonoBehaviour
     [SerializeField] int winningScore;
     [SerializeField] int maximumWinners;
 
-    [SerializeField] TextMeshProUGUI matchNumberText;
     [SerializeField] GameObject participantPrefab;
     [SerializeField] Button tieButton;
 
@@ -24,8 +23,6 @@ public class Match : MonoBehaviour
     void Start()
     {
         verticalLayoutGroup = (RectTransform)transform.parent;
-
-        matchNumberText.text = $"#{MatchManager.NewMatchNumber:00}";
 
         InstantiateParticipant();
 
@@ -62,10 +59,9 @@ public class Match : MonoBehaviour
     void InstantiateParticipant()
     {
         var newParticipant = Instantiate(participantPrefab, transform).GetComponent<Participant>();
+        newParticipant.transform.SetSiblingIndex(transform.childCount - 2);
         newParticipant.SetVariables(this, winningScore, !showAllWinButtons);
         participants.Add(newParticipant);
-
-        LayoutRebuilder.ForceRebuildLayoutImmediate(verticalLayoutGroup); // This is a hack for the UI to work
     }
 
     public void RemovedParticipant()

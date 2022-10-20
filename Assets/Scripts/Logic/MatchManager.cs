@@ -22,6 +22,9 @@ public static class MatchManager
         }
 
         string[] lines = File.ReadAllLines(configPath);
+
+        participants.Clear();
+        names.Clear();
         foreach (string line in lines)
         {
             string[] pair = line.Remove(line.Length - 1, 1).Remove(0, 1).Split(',');
