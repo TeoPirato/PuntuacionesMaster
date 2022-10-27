@@ -11,7 +11,7 @@ public static class MatchManager
     static readonly SortedList<string, int> participants = new SortedList<string, int>();
     static readonly SortedSet<string> names = new SortedSet<string>();
 
-    readonly static string configPath = Application.persistentDataPath + "/data.txt";
+    public readonly static string configPath = Application.persistentDataPath + "/data.txt";
 
     public static void InitializeParticipants()
     {

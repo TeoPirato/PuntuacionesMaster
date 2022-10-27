@@ -23,4 +23,6 @@ public class LogInManager : MonoBehaviour
             MatchManager.DeleteScores();
         }
     }
+
+    public void ShareData() => new NativeShare().AddFile(MatchManager.configPath, ".txt").Share();
 }
