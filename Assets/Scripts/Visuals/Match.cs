@@ -18,12 +18,9 @@ public class Match : MonoBehaviour
     [SerializeField] Button tieButton;
 
     readonly List<Participant> participants = new List<Participant>();
-    RectTransform verticalLayoutGroup;
 
     void Start()
     {
-        verticalLayoutGroup = (RectTransform)transform.parent;
-
         InstantiateParticipant();
 
         tieButton.transform.localScale = Vector3.zero;
@@ -34,7 +31,7 @@ public class Match : MonoBehaviour
     {
         if (participants.Count < maximumParticipants)
             InstantiateParticipant();
-        else
+        else if (participants.All(p => p.ParticipantName != ""))
         {
             if (canTie)
             {

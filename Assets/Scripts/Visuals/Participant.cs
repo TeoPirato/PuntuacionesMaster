@@ -55,11 +55,11 @@ public class Participant : MonoBehaviour
         ParticipantWindow.Instance.AddedParticipant -= ChangeParticipantName;
         if (name == null) return;
 
-        match.AddedParticipant();
-        if (showWinButtonOnChangeName) ShowWinButton();
 
         MatchManager.AddScoreToParticipant(0, name);
         participantName.text = name;
+        match.AddedParticipant();
+        if (showWinButtonOnChangeName) ShowWinButton();
 
         addButton.interactable = false;
         addButton.transform.LeanScale(Vector3.zero, .2f);
